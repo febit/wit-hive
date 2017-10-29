@@ -1,0 +1,27 @@
+
+[global]
+registers+='''
+'''
+
+[engine]
+vars='''
+  TYPE
+  PARAM_OIS
+  main
+'''
+
+[nativeFactory :defaultNativeFactory]
+[resolverManager :defaultResolverManager]
+
+[codeStringLoader :stringLoader]
+codeFirst=true
+
+[routeLoader]
+loaders +='''
+  code: codeStringLoader
+'''
+
+[resolverManager]
+resolvers+='''
+  org.febit.wit.hive.StructListResolver
+'''

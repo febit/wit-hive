@@ -1,0 +1,11 @@
+target/
+*.iml
+.idea
+.settings/
+.classpath
+.project
+nb-configuration.xml
+nbactions.xml
+tests.props.local
+!.travis.yml
+!.gitignore
