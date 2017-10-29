@@ -12,8 +12,14 @@
 SELECT 
   wit('TYPE=OI_STRING; main=()->"Hi WIT"'),
   wit('TYPE=OI_STRUCT(["id", "name"], [OI_INT, OI_STRING]); main=()->[9527, "Mr. Wit"]'),
-  wit('TYPE=OI_LIST(PARAM_OIS[0].mapValueObjectInspector); main=(map)->map.~values().~toArray()', map("A",array("a","A"),"B",array("b","B"))), -- 获取 Map 的 values
-  wit('TYPE=PARAM_OIS[0].~getStructFieldRef("name").fieldObjectInspector; main=(bean)->bean.name', named_struct("id", 9527, "name", "Mr. Wit")) -- 获取 Struct 的 name 字段
+  -- 获取 List 的最后一个元素
+  wit('TYPE=PARAM_OIS[0].elementOI; main=(list)-> list.size > 0 && list[list.size-1] || null', array()),
+  -- 获取 Map 的 values
+  wit('TYPE=OI_LIST(PARAM_OIS[0].valueOI); main=(map)->map.~values().~toArray()', map("A",array("a","A"),"B",array("b","B"))),
+  -- 获取 Struct 的 name 字段
+  wit('TYPE=PARAM_OIS[0].name.oi; main=(bean)->bean.name', named_struct("id", 9527, "name", "Mr. Wit")),
+  -- 获取 Struct 的 name 字段 (推荐: 提前获取 id, 即数组索引, 并使用索引获取值)
+  wit('TYPE=PARAM_OIS[0].name.oi; var index=PARAM_OIS[0].name.id;  main=(bean)->bean[index]', named_struct("id", 9527, "name", "Mr. Wit"))
   ;
 
 WITH t AS(

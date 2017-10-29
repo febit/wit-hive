@@ -13,38 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.febit.wit.hive;
+package org.febit.wit.hive.resolver;
 
+import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.febit.wit.resolvers.GetResolver;
-import org.febit.wit.resolvers.SetResolver;
 
 /**
  *
  * @author zqq90
  */
-public class StructListResolver implements GetResolver, SetResolver {
+public class StructObjectInspectorResolver implements GetResolver {
 
   @Override
   public Object get(Object object, Object property) {
-    if (property instanceof Number) {
-      return ((StructList) object).get(((Number) property).intValue());
-    } else {
-      return ((StructList) object).getByName(property);
-    }
-  }
-
-  @Override
-  public void set(Object object, Object property, Object value) {
-    if (property instanceof Number) {
-      ((StructList) object).set(((Number) property).intValue(), value);
-    } else {
-      ((StructList) object).setByName(property, value);
-    }
+    return ((StructObjectInspector) object).getStructFieldRef(String.valueOf(property));
   }
 
   @Override
   public Class getMatchClass() {
-    return StructList.class;
+    return StructObjectInspector.class;
   }
 
 }

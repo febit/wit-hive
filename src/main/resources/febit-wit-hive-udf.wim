@@ -23,5 +23,10 @@ loaders +='''
 
 [resolverManager]
 resolvers+='''
-  org.febit.wit.hive.StructListResolver
+  org.febit.wit.hive.resolver.ListObjectInspectorResolver
+  org.febit.wit.hive.resolver.MapObjectInspectorResolver
+  org.febit.wit.hive.resolver.StructFieldResolver
+  org.febit.wit.hive.resolver.StructListResolver
+  org.febit.wit.hive.resolver.StructObjectInspectorResolver
+  org.febit.wit.hive.resolver.UnionObjectInspectorResolver
 '''
