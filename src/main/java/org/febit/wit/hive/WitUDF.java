@@ -16,6 +16,7 @@
 package org.febit.wit.hive;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +34,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.StructField;
 import org.apache.hadoop.hive.serde2.objectinspector.StructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.UnionObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorUtils;
 import org.febit.wit.Context;
 import org.febit.wit.Engine;
 import org.febit.wit.Function;
@@ -106,13 +105,11 @@ public class WitUDF extends GenericUDF {
     }
     if (!(arguments[0] instanceof ConstantObjectInspector)
       || !(arguments[0] instanceof PrimitiveObjectInspector)) {
-      throw new UDFArgumentTypeException(0, "wit template should a const string!");
+      throw new UDFArgumentTypeException(0, "wit template should be a const string!");
     }
 
     // 得到模板
-    ConstantObjectInspector tmplOI = (ConstantObjectInspector) arguments[0];
-    String tmpl = PrimitiveObjectInspectorUtils.getString(
-      tmplOI.getWritableConstantValue(), (PrimitiveObjectInspector) tmplOI);
+    String tmpl = String.valueOf(((ConstantObjectInspector) arguments[0]).getWritableConstantValue());
 
     // 参数类型
     originParamOIs = new ObjectInspector[arguments.length - 1];
@@ -180,8 +177,12 @@ public class WitUDF extends GenericUDF {
       case PRIMITIVE: {
         PrimitiveObjectInspector loi = (PrimitiveObjectInspector) oi;
         Object result = loi.getPrimitiveJavaObject(o);
-        if (loi.getPrimitiveCategory() == PrimitiveObjectInspector.PrimitiveCategory.TIMESTAMP) {
-          result = PrimitiveObjectInspectorFactory.javaTimestampObjectInspector.copyObject(result);
+        if (result instanceof Timestamp) {
+          // Timestamp 是可变的, 需要复制一份
+          Timestamp source = (Timestamp) result;
+          Timestamp copy = new Timestamp(source.getTime());
+          copy.setNanos(source.getNanos());
+          return copy;
         }
         return result;
       }
