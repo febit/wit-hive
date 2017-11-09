@@ -25,12 +25,16 @@ import org.apache.hadoop.hive.serde2.objectinspector.PrimitiveObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.StandardStructObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.UnionObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectInspectorFactory;
+import org.febit.wit.Engine;
+import org.febit.wit.core.NativeFactory;
+import org.febit.wit.global.GlobalManager;
+import org.febit.wit.util.JavaNativeUtil;
 
 /**
  *
  * @author zqq90
  */
-public class ObjectInspectorMethods {
+public class ObjectInspectorMethods implements WitEnginePlugin {
 
   public static final PrimitiveObjectInspector OI_BOOLEAN = PrimitiveObjectInspectorFactory.javaBooleanObjectInspector;
   public static final PrimitiveObjectInspector OI_BYTES = PrimitiveObjectInspectorFactory.javaByteArrayObjectInspector;
@@ -83,5 +87,13 @@ public class ObjectInspectorMethods {
       inspectorList.add((ObjectInspector) inspector);
     }
     return inspectorList;
+  }
+
+  @Override
+  public void handle(Engine engine) {
+    NativeFactory nativeFactory = engine.getNativeFactory();
+    GlobalManager manager = engine.getGlobalManager();
+    JavaNativeUtil.addStaticMethods(manager, nativeFactory, ObjectInspectorMethods.class);
+    JavaNativeUtil.addConstFields(manager, nativeFactory, ObjectInspectorMethods.class);
   }
 }

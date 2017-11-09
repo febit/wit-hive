@@ -19,8 +19,10 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
@@ -76,6 +78,10 @@ public class WitUDF extends GenericUDF {
 
     static {
       ENGINE = Engine.create("febit-wit-hive-udf.wim");
+      Iterator<WitEnginePlugin> iterator = ServiceLoader.load(WitEnginePlugin.class).iterator();
+      while (iterator.hasNext()) {
+        iterator.next().handle(ENGINE);
+      }
       NativeFactory nativeFactory = ENGINE.getNativeFactory();
       GlobalManager manager = ENGINE.getGlobalManager();
       JavaNativeUtil.addStaticMethods(manager, nativeFactory, ObjectInspectorMethods.class);
