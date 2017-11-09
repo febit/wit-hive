@@ -10,6 +10,7 @@ vars='''
   main
 '''
 
+[logger :slf4jLogger]
 [nativeFactory :defaultNativeFactory]
 [resolverManager :defaultResolverManager]
 
