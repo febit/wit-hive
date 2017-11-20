@@ -82,10 +82,6 @@ public class WitUDF extends GenericUDF {
       while (iterator.hasNext()) {
         iterator.next().handle(ENGINE);
       }
-      NativeFactory nativeFactory = ENGINE.getNativeFactory();
-      GlobalManager manager = ENGINE.getGlobalManager();
-      JavaNativeUtil.addStaticMethods(manager, nativeFactory, ObjectInspectorMethods.class);
-      JavaNativeUtil.addConstFields(manager, nativeFactory, ObjectInspectorMethods.class);
     }
   }
 
