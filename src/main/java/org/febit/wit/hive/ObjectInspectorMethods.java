@@ -28,13 +28,14 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectIn
 import org.febit.wit.Engine;
 import org.febit.wit.core.NativeFactory;
 import org.febit.wit.global.GlobalManager;
+import org.febit.wit.plugin.EnginePlugin;
 import org.febit.wit.util.JavaNativeUtil;
 
 /**
  *
  * @author zqq90
  */
-public class ObjectInspectorMethods implements WitEnginePlugin {
+public class ObjectInspectorMethods implements EnginePlugin {
 
   public static final PrimitiveObjectInspector OI_BOOLEAN = PrimitiveObjectInspectorFactory.javaBooleanObjectInspector;
   public static final PrimitiveObjectInspector OI_BYTES = PrimitiveObjectInspectorFactory.javaByteArrayObjectInspector;
@@ -90,7 +91,7 @@ public class ObjectInspectorMethods implements WitEnginePlugin {
   }
 
   @Override
-  public void handle(Engine engine) {
+  public void apply(Engine engine) {
     NativeFactory nativeFactory = engine.getNativeFactory();
     GlobalManager manager = engine.getGlobalManager();
     JavaNativeUtil.addStaticMethods(manager, nativeFactory, ObjectInspectorMethods.class);

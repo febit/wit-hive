@@ -14,6 +14,9 @@ vars='''
 [nativeFactory :defaultNativeFactory]
 [resolverManager :defaultResolverManager]
 
+[spiPluginCollector]
+enable=true
+
 [codeStringLoader :stringLoader]
 codeFirst=true
 

@@ -19,10 +19,8 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentException;
 import org.apache.hadoop.hive.ql.exec.UDFArgumentTypeException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
@@ -40,10 +38,6 @@ import org.febit.wit.Context;
 import org.febit.wit.Engine;
 import org.febit.wit.Function;
 import org.febit.wit.Template;
-import org.febit.wit.core.NativeFactory;
-import org.febit.wit.global.GlobalManager;
-import org.febit.wit.io.impl.DiscardOut;
-import org.febit.wit.util.JavaNativeUtil;
 import org.febit.wit.util.KeyValuesUtil;
 
 /**
@@ -64,10 +58,6 @@ public class WitUDF extends GenericUDF {
    * 返回类型的变量名
    */
   public static final String KEY_RETURN_TYPE = "TYPE";
-  /**
-   * 用于丢弃模板的输出
-   */
-  protected static final DiscardOut DISCARD_OUT = new DiscardOut();
 
   /**
    * 用于惰性构建模板引擎.
@@ -78,10 +68,6 @@ public class WitUDF extends GenericUDF {
 
     static {
       ENGINE = Engine.create("febit-wit-hive-udf.wim");
-      Iterator<WitEnginePlugin> iterator = ServiceLoader.load(WitEnginePlugin.class).iterator();
-      while (iterator.hasNext()) {
-        iterator.next().handle(ENGINE);
-      }
     }
   }
 
@@ -95,7 +81,7 @@ public class WitUDF extends GenericUDF {
   }
 
   protected Context executeTemplate(Template template) throws IOException {
-    return template.merge(KeyValuesUtil.wrap(KEY_PARAM_OIS, paramOIs), DISCARD_OUT);
+    return template.merge(KeyValuesUtil.wrap(KEY_PARAM_OIS, paramOIs));
   }
 
   @Override

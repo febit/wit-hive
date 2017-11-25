@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.febit.wit</groupId>
   <artifactId>wit-hive</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.2.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <organization>
     <name>febit.org</name>
@@ -19,7 +19,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <wit.version>2.3.0-beta</wit.version>
+    <wit.version>2.4.0-beta</wit.version>
+    <slf4j.version>1.7.25</slf4j.version>
     <hive.version>1.2.0</hive.version>
   </properties>
   <profiles>
@@ -104,6 +105,12 @@
       <groupId>org.febit.wit</groupId>
       <artifactId>wit-core</artifactId>
       <version>${wit.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hive</groupId>
