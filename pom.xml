@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.febit.wit</groupId>
   <artifactId>wit-hive</artifactId>
-  <version>0.2.0-SNAPSHOT</version>
+  <version>0.3.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <organization>
     <name>febit.org</name>
@@ -17,9 +17,9 @@
   </licenses>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <wit.version>2.4.0-beta</wit.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <wit.version>2.5.0-beta</wit.version>
     <slf4j.version>1.7.25</slf4j.version>
     <hive.version>1.2.0</hive.version>
   </properties>

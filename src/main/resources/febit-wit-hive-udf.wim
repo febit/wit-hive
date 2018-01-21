@@ -17,14 +17,6 @@ vars='''
 [spiPluginCollector]
 enable=true
 
-[codeStringLoader :stringLoader]
-codeFirst=true
-
-[routeLoader]
-loaders +='''
-  code: codeStringLoader
-'''
-
 [resolverManager]
 resolvers+='''
   org.febit.wit.hive.resolver.ListObjectInspectorResolver

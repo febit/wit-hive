@@ -20,7 +20,7 @@ SELECT
   wit('TYPE=PARAM_OIS[0].name.oi \n main=(bean)->bean.name', named_struct("id", 9527, "name", "Mr. Wit")),
   -- 获取 Struct 的 name 字段 (推荐: 提前获取 id, 即数组索引, 并使用索引获取值)
   wit('TYPE=PARAM_OIS[0].name.oi \n var index=PARAM_OIS[0].name.id \n  main=(bean)->bean[index]', named_struct("id", 9527, "name", "Mr. Wit"))
-  ;
+;
 
 WITH t AS(
   -- 我们用 concat 来实现多行, 方便阅读, 这里实际上会被优化成常量字符串传入 wit, 因此不用担心会报错
